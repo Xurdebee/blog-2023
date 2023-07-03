@@ -5,9 +5,9 @@ import PostsList from "../components/Home/PostsList";
 
 function App() {
   return (
-    <>
+    <body>
         <PostsList />
-	</>
+    </body>
   );
 }
 

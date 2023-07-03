@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { Container } from 'react-bootstrap';
-import moment from 'moment';
-import 'moment/locale/es';
-moment.locale('es');
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { Container } from "react-bootstrap";
+import moment from "moment";
+import "moment/locale/es";
+moment.locale("es");
 
 function EditablePost() {
   const [post, setPost] = useState(null);
   const [editing, setEditing] = useState(false);
-  const [updatedHeader, setUpdatedHeader] = useState('');
-  const [updatedBody, setUpdatedBody] = useState('');
+  const [updatedHeader, setUpdatedHeader] = useState("");
+  const [updatedBody, setUpdatedBody] = useState("");
   const [updatedImage, setUpdatedImage] = useState(null);
 
   const { post_id } = useParams();
@@ -34,12 +34,12 @@ function EditablePost() {
 
   const handleSave = () => {
     const formData = new FormData();
-    formData.append('image', updatedImage);
-    formData.append('header', updatedHeader);
-    formData.append('body', updatedBody);
+    formData.append("image", updatedImage);
+    formData.append("header", updatedHeader);
+    formData.append("body", updatedBody);
 
     fetch(`http://localhost:3000/api/posts/editpost/${post_id}`, {
-      method: 'POST',
+      method: "POST",
       body: formData,
     })
       .then((response) => response.json())
@@ -69,23 +69,29 @@ function EditablePost() {
   };
 
   const handleDeletePost = () => {
-    fetch(`http://localhost:3000/api/posts/delete/${post_id}`, {
-      method: 'DELETE',
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Error al eliminar el post');
-        }
+    const confirmed = window.confirm(
+      "¿Estás seguro de quierer borrar el post?"
+    );
+
+    if (confirmed) {
+      fetch(`http://localhost:3000/api/posts/delete/${post_id}`, {
+        method: "DELETE",
       })
-      .then((data) => {
-        console.log(data);
-        window.location.href = "/";
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error("Error al eliminar el post");
+          }
+        })
+        .then((data) => {
+          console.log(data);
+          window.location.href = "/";
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   const charactersCount = updatedHeader.length;
@@ -94,11 +100,10 @@ function EditablePost() {
     <>
       {post && (
         <article key={post.post_id}>
-          {editing ? (
-            <>
+          {editing ? (  
               <Container>
                 <div className="mt-5 justify-content-center row align-items-center">
-                  <div className="col-10 bg-light shadow-lg p-5 rounded-3">
+                  <div className="col-10 bg-success-subtle shadow-lg p-5 rounded-3">
                     {updatedImage && (
                       <img
                         src={URL.createObjectURL(updatedImage)}
@@ -125,11 +130,11 @@ function EditablePost() {
                             value={updatedHeader || post.header}
                             onChange={handleHeaderChange}
                             style={{
-                              resize: 'none',
-                              width: '100%',
-                              height: 'auto',
-                              minHeight: '50px',
-                              maxHeight: '200px',
+                              resize: "none",
+                              width: "100%",
+                              height: "auto",
+                              minHeight: "50px",
+                              maxHeight: "200px",
                             }}
                           />
                         </h2>
@@ -141,11 +146,11 @@ function EditablePost() {
                             value={updatedBody || post.body}
                             onChange={handleBodyChange}
                             style={{
-                              resize: 'none',
-                              width: '100%',
-                              height: 'auto',
-                              minHeight: '100px',
-                              maxHeight: '500px',
+                              resize: "none",
+                              width: "100%",
+                              height: "auto",
+                              minHeight: "100px",
+                              maxHeight: "500px",
                             }}
                           />
                         </p>
@@ -170,11 +175,10 @@ function EditablePost() {
                   </div>
                 </div>
               </Container>
-            </>
           ) : (
             <Container>
               <div className="mt-5 justify-content-center row align-items-center">
-                <div className="col-10 bg-light shadow-lg p-5 rounded-3">
+                <div className="col-10 bg-success-subtle shadow-lg p-5 rounded-3">
                   <img
                     src={`http://localhost:3000/images/${post.image}`}
                     alt={`Post ${post.post_id}`}
@@ -186,10 +190,20 @@ function EditablePost() {
                       <p className="mb-5">{post.body}</p>
                       <div className="mb-5">
                         <div>
-                        <p>Creado el {moment(post.date).format('dddd D [de] MMMM [del] YYYY')}</p>
+                          <p>
+                            Creado el{" "}
+                            {moment(post.date).format(
+                              "dddd D [de] MMMM [del] YYYY"
+                            )}
+                          </p>
                         </div>
                         <div className="mb-5">
-                          <p>Editado el {moment(post.date).format('dddd D [de] MMMM [del] YYYY')}</p>
+                          <p>
+                            Editado el{" "}
+                            {moment(post.date).format(
+                              "dddd D [de] MMMM [del] YYYY"
+                            )}
+                          </p>
                         </div>
                         <div className="d-flex justify-content-between">
                           <button

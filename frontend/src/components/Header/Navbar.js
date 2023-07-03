@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
 function Navbar() {
   return (
     <>
-      <a href="/new-post" className="btn btn-outline-light btn-sm">
+      <a href="/new-post" className="btn btn-light border-2 border-dark mt-0 m-3">
         Nueva entrada
       </a>
     </>

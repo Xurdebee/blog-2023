@@ -56,7 +56,7 @@ const NewPost = () => {
   return (
     <Container>
       <div className="mt-5 justify-content-center row align-items-center">
-        <div className="col-10 bg-light shadow-lg p-5 rounded-3">
+        <div className="col-10 bg-success-subtle shadow-lg p-5 rounded-3">
           <div className="overflow-hidden">
             {image && (
               <img

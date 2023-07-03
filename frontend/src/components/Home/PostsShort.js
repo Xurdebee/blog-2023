@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import moment from 'moment';
-import 'moment/locale/es';
-moment.locale('es');
+import moment from "moment";
+import "moment/locale/es";
+moment.locale("es");
 
 function PostsShort() {
   const [allPosts, setAllPosts] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/posts/all-post')
+    fetch("http://localhost:3000/api/posts/all-post")
       .then((response) => response.json())
       .then((myPosts) => {
         setAllPosts(myPosts);
@@ -22,29 +22,34 @@ function PostsShort() {
     if (text.length <= maxLength) {
       return text;
     }
-    return text.slice(0, maxLength) + '...';
+    return text.slice(0, maxLength) + "...";
   };
 
   const handleDeletePost = (post_id) => {
-    fetch(`http://localhost:3000/api/posts/delete/${post_id}`, {
-      method: 'DELETE',
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Error al eliminar el post');
-        }
+    const confirmed = window.confirm(
+      "¿Estás seguro de quierer borrar el post?"
+    );
+
+    if (confirmed) {
+      fetch(`http://localhost:3000/api/posts/delete/${post_id}`, {
+        method: "DELETE",
       })
-      .then((data) => {
-        console.log(data);
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error("Error al eliminar el post");
+          }
+        })
+        .then((data) => {
+          console.log(data);
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
-  
 
   return (
     <Container>
@@ -52,25 +57,42 @@ function PostsShort() {
         {allPosts.map((post) => (
           <Col key={post.post_id} xs={12} lg={6}>
             <article>
-              <div className="mt-3 d-flex bg-light rounded-3 position-relative mb-3" style={{ minHeight: '370px' }}>
+              <div
+                className="mt-3 d-flex bg-success-subtle shadow-lg rounded-3 position-relative mb-3"
+                style={{ minHeight: "370px" }}
+              >
                 <div className="col-4">
                   <a href={`/post/${post.post_id}`}>
                     <div
                       className="image-container"
-                      style={{ Height: '100%', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                      style={{
+                        Height: "100%",
+                        width: "100%",
+                        height: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
                     >
                       <img
                         src={`http://localhost:3000/images/${post.image}`}
                         alt={`Post ${post.post_id}`}
                         className="rounded-start-3 img-fluid"
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                        }}
                       />
                     </div>
                   </a>
                 </div>
                 <div className="col-8 p-3">
                   <div>
-                    <a href={`/post/${post.post_id}`} className="text-decoration-none text-black">
+                    <a
+                      href={`/post/${post.post_id}`}
+                      className="text-decoration-none text-black"
+                    >
                       <h2>{post.header}</h2>
                     </a>
                   </div>
@@ -79,7 +101,11 @@ function PostsShort() {
                   </div>
                   <div className="mb-5">
                     <div>
-                      <p>{moment(post.date).format('dddd D [de] MMMM [del] YYYY')}</p>
+                      <p>
+                        {moment(post.date).format(
+                          "dddd D [de] MMMM [del] YYYY"
+                        )}
+                      </p>
                     </div>
                     <div>
                       <p>Publicado hace {post.timeAgo}</p>
