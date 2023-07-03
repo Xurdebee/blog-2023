@@ -3,19 +3,19 @@
  
 ## Uso del proyecto 
 
-Para poder ejecutar el proyecto necesitas instalar las librerías. 
+Para poder ejecutar el proyecto se necesita instalar las librerías tanto en el backend como en el frontend. 
 No están subidas las carpetas de node_modules para evitar el peso de los archivos. 
-Tienes que utilizar la base de datos incluida dentro dela carpeta de backend. 
+Tienes que utilizar la base de datos incluida dentro de la carpeta de backend. 
 Para ejecutar el backend ejecutar primero node index.js en la ruta de backend. 
 Para ejecutar el frontend ejecutar npm start en la ruta del frontend. 
-No he modificado la ruta de inicio del front, así que permitir que abra en un puerto distinto. 
+No he modificado la ruta de inicio del front para evitar conflictos, así que hay que permitir que abra en un puerto distinto. 
 
 
 ## Planteamiento y Objetivos 
 
 El proyecto "blog-2023" tenía que seguir unas características dadas por una consigna: 
 "Realizar un blog sencillo con un sistema CRUD (Create, Read, Update, Delete). 
-Un sistema que nos permita crear entradas, que salgan en el feed de la home, editar la entrada y poder eliminarla de manera dinámica" 
+Un sistema que nos permita crear entradas, que salgan en la home, editar la entrada y poder eliminarla de manera dinámica" 
 Tenía que utilizar varías tecnologías: 
 - NodeJs 
 - React 
